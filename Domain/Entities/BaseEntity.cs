@@ -17,24 +17,41 @@ public abstract class BaseEntity
     /// <returns></returns>
     public override bool Equals(object? obj)
     {
-        if (obj == null)
-        {
-            return false;
-        }
-            
         if(obj is not BaseEntity entity)
         {
             return false;
         }
 
-        if (entity.Id != Id)
+        return Id == entity.Id;
+    }
+
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
+
+    public static bool operator ==(BaseEntity? entity1, BaseEntity? entity2)
+    {
+        if (ReferenceEquals(entity1, entity2))
+        {
+            return true;
+        }
+
+        if (entity1 is null || entity2 is null)
         {
             return false;
         }
 
-        return true;
+        return entity1.Id == entity2.Id;
     }
 
+    public static bool operator !=(BaseEntity? entity1, BaseEntity? entity2)
+    {
+        return !(entity1 == entity2);
+    }
+    
+    /*
+    // как я сделал
     public override int GetHashCode()
     {
         // TODO: поресёрчить и переопределить
@@ -53,4 +70,5 @@ public abstract class BaseEntity
             return hash;
         }
     }
+    */
 }
